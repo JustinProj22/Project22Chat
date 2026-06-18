@@ -2,7 +2,7 @@ const webpush = require('web-push');
 
 // These come from Vercel's Environment Variables (set in the dashboard, not in code)
 webpush.setVapidDetails(
-  'Justin@Project22.com.au',          // contact email, required by VAPID spec
+  'mailto:Justin@Project22.com.au',          // contact email, required by VAPID spec
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
