@@ -18,16 +18,24 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'method not allowed' });
   }
 
-  const { subscription, title, body } = req.body;
+  const parsed = typeof req.body === "string"
+  ? JSON.parse(req.body)
+  : req.body;
 
-  if (!subscription || !subscription.endpoint) {
-    return res.status(400).json({ error: 'missing subscription' });
-  }
+const { subscription, title, body } = parsed;
+
+if (!subscription || !subscription.endpoint) {
+  return res.status(400).json({
+    debug: true,
+    body: req.body,
+    error: "missing subscription"
+  });
+}
 
   const payload = JSON.stringify({
     title:          title || 'New message',
     body:           body  || '',
-    conversationId: req.body.conversationId || ''
+    conversationId: parsed.conversationId || ''
   });
 
   try {
@@ -40,6 +48,9 @@ module.exports = async (req, res) => {
       success: false,
       error: err.message,
       statusCode: err.statusCode
+      
     });
+
+});
   }
 };
