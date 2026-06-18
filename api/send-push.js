@@ -2,10 +2,11 @@ const webpush = require('web-push');
 
 // These come from Vercel's Environment Variables (set in the dashboard, not in code)
 webpush.setVapidDetails(
-  'mailto:you@example.com',          // contact email, required by VAPID spec
+  'Justin@Project22.com.au',          // contact email, required by VAPID spec
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
+
 
 module.exports = async (req, res) => {
   // Basic shared-secret check so randoms can't spam your push relay
@@ -24,8 +25,9 @@ module.exports = async (req, res) => {
   }
 
   const payload = JSON.stringify({
-    title: title || 'New message',
-    body: body || ''
+    title:          title || 'New message',
+    body:           body  || '',
+    conversationId: req.body.conversationId || ''
   });
 
   try {
